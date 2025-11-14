@@ -59,6 +59,7 @@ pg.display.set_caption('Змейка')
 # Настройка времени:
 clock = pg.time.Clock()
 
+
 class GameObject:
     """
     Базовый класс для всех игровых объектов.
