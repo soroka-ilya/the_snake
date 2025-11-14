@@ -207,11 +207,11 @@ class Snake(GameObject):
         new_head = ((head_x + dx * GRID_SIZE) % SCREEN_WIDTH,
                     (head_y + dy * GRID_SIZE) % SCREEN_HEIGHT)
 
+        self.positions.insert(0, new_head)
         if len(self.positions) > self.length:
             self.last = self.positions.pop()
         else:
             self.last = None
-        self.positions.insert(0, new_head)
 
         return new_head
 
@@ -243,11 +243,6 @@ class Snake(GameObject):
 
     def draw(self):
         """Отрисовывает змейку на экране."""
-        for position in self.positions[:-1]:
-            rect = pg.Rect(position, (GRID_SIZE, GRID_SIZE))
-            pg.draw.rect(screen, self.body_color, rect)
-            pg.draw.rect(screen, BORDER_COLOR, rect, 1)
-
         head_rect = pg.Rect(self.positions[0], (GRID_SIZE, GRID_SIZE))
         pg.draw.rect(screen, self.body_color, head_rect)
         pg.draw.rect(screen, BORDER_COLOR, head_rect, 1)
@@ -255,6 +250,7 @@ class Snake(GameObject):
         if self.last:
             last_rect = pg.Rect(self.last, (GRID_SIZE, GRID_SIZE))
             pg.draw.rect(screen, BOARD_BACKGROUND_COLOR, last_rect)
+            self.last = None
 
 def handle_keys(game_object):
     """
