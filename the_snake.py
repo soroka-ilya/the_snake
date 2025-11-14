@@ -127,7 +127,8 @@ class Apple(GameObject):
             for y in range(GRID_HEIGHT)
         ]
 
-        free_positions = [pos for pos in all_positions if pos not in occupied_positions]
+        free_positions = [pos for pos in all_positions
+                          if pos not in occupied_positions]
 
         if free_positions:
             self.position = choice(free_positions)
@@ -252,6 +253,7 @@ class Snake(GameObject):
             pg.draw.rect(screen, BOARD_BACKGROUND_COLOR, last_rect)
             self.last = None
 
+
 def handle_keys(game_object):
     """
     Обрабатывает нажатия клавиш для управления игрой.
@@ -303,7 +305,7 @@ def main():
     pg.init()
     # Тут нужно создать экземпляры классов.
     snake = Snake()
-    apple = Apple(occupied_positions = snake.positions)
+    apple = Apple(occupied_positions=snake.positions)
     screen.fill(BOARD_BACKGROUND_COLOR)
     while True:
         clock.tick(SPEED)
