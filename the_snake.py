@@ -99,7 +99,8 @@ class Apple(GameObject):
         Инициализирует яблоко со случайной позицией и цветом.
 
         Args:
-            occupied_positions (list): Занятые позиции на игровом поле
+            occupied_positions: Занятые позиции на игровом поле,
+            по умолчанию None
             body_color (tuple): Цвет яблока в формате RGB,
             по умолчанию APPLE_COLOR
         """
