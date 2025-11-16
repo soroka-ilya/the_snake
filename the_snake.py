@@ -29,6 +29,13 @@ GRID_SIZE = 20
 GRID_WIDTH = SCREEN_WIDTH // GRID_SIZE
 GRID_HEIGHT = SCREEN_HEIGHT // GRID_SIZE
 
+# Рассчитываем все возможные позиции на поле
+ALL_POSITIONS = [
+    (grid_x * GRID_SIZE, grid_y * GRID_SIZE)
+    for grid_x in range(GRID_WIDTH)
+    for grid_y in range(GRID_HEIGHT)
+]
+
 # Направления движения:
 UP = (0, -1)
 DOWN = (0, 1)
@@ -98,17 +105,7 @@ class Apple(GameObject):
         """
         super().__init__()
         self.body_color = body_color
-        self.occupied_positions = []
-        self.randomize_position(self.occupied_positions)
-
-    def add_occupied_position(self, position):
-        """
-        Добавляет занятую позицию в список.
-
-        Args:
-            position (tuple): Позиция яблока на игровом поле
-        """
-        self.occupied_positions.append(position)
+        self.randomize_position(occupied_positions)
 
     def randomize_position(self, occupied_positions):
         """
@@ -116,18 +113,11 @@ class Apple(GameObject):
 
         Args:
             occupied_positions (list, optional): Список занятых позиций,
-            которые нужно избегать
+            которые нужно избегать. По умолчанию None
         """
-        if occupied_positions is None:
-            occupied_positions = []
+        occupied_positions = occupied_positions or []
 
-        all_positions = [
-            (x * GRID_SIZE, y * GRID_SIZE)
-            for x in range(GRID_WIDTH)
-            for y in range(GRID_HEIGHT)
-        ]
-
-        free_positions = [pos for pos in all_positions
+        free_positions = [pos for pos in ALL_POSITIONS
                           if pos not in occupied_positions]
 
         if free_positions:
@@ -251,7 +241,7 @@ class Snake(GameObject):
         - Стирает только последний удаленный сегмент (если есть)
         - Не перерисовывает все тело каждый кадр
         """
-        head_rect = pg.Rect(self.positions[0], (GRID_SIZE, GRID_SIZE))
+        head_rect = pg.Rect(self.get_head_position(), (GRID_SIZE, GRID_SIZE))
         pg.draw.rect(screen, self.body_color, head_rect)
         pg.draw.rect(screen, BORDER_COLOR, head_rect, 1)
 
