@@ -94,7 +94,7 @@ class Apple(GameObject):
     на игровом поле и служит пищей для змейки.
     """
 
-    def __init__(self, occupied_positions=list, body_color=APPLE_COLOR):
+    def __init__(self, occupied_positions=None, body_color=APPLE_COLOR):
         """
         Инициализирует яблоко со случайной позицией и цветом.
 
